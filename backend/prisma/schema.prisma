@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  AGENT
+  CUSTOMER
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_FOR_CUSTOMER
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(CUSTOMER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tickets   Ticket[]
+  messages  Message[]
+  auditLogs      AuditLog[]
+  notifications  Notification[]
+}
+
+model Ticket {
+  id          Int            @id @default(autoincrement())
+  title       String
+  description String
+  status      TicketStatus   @default(OPEN)
+  priority    TicketPriority @default(MEDIUM)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  messages Message[]
+  aiAnalyses AIAnalysis[]
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  ticketId Int
+  ticket   Ticket @relation(fields: [ticketId], references: [id])
+}
+
+enum AnalysisType {
+  CLASSIFICATION
+  SENTIMENT
+  SUMMARY
+  RESPONSE
+}
+
+model AIAnalysis {
+  id          Int          @id @default(autoincrement())
+  type        AnalysisType
+  result      String
+  confidence  Float?
+  createdAt   DateTime     @default(now())
+
+  ticketId    Int
+  ticket      Ticket       @relation(fields: [ticketId], references: [id])
+}
+
+model KnowledgeDocument {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  source      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  chunks      DocumentChunk[]
+}
+
+model DocumentChunk {
+  id         Int      @id @default(autoincrement())
+  content    String
+  chunkIndex Int
+  createdAt  DateTime @default(now())
+  documentId Int
+
+  document   KnowledgeDocument @relation(fields: [documentId], references: [id])
+
+  embedding  Unsupported("vector(384)")?
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+
+  userId    Int?
+  user      User? @relation(fields: [userId], references: [id])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
+}
