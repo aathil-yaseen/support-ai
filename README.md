@@ -245,15 +245,16 @@ http://localhost:3000
 | AI Service | 8000 | AI and embedding operations |
 | PostgreSQL | 5432 | Application database |
 
+## Screenshots
+
 ### Dashboard
-![SupportAI Dashboard](Screenshots/Dashboard/dashboard.jpeg)
+![SupportAI Dashboard](Screenshots/Dashboard.jpeg)
 
 ### Ticket Management
-![SupportAI Tickets](Screenshots/Tickets/tickets.jpeg)git status --short
+![SupportAI Tickets](Screenshots/Tickets.jpeg)
 
 ### Knowledge Base
-![SupportAI Knowledge Base](Screenshots/Knowledge/knowledge.jpeg)
-
+![SupportAI Knowledge Base](Screenshots/Knowledge.jpeg)
 
 ## Security
 
