@@ -58,7 +58,7 @@ The knowledge retrieval workflow includes:
 4. PostgreSQL + pgvector storage
 5. Semantic similarity search
 6. Relevant knowledge retrieval
-7. Context-aware response generation
+7. Knowledge-supported response generation
 
 The embedding model used for semantic search is:
 
@@ -245,6 +245,16 @@ http://localhost:3000
 | AI Service | 8000 | AI and embedding operations |
 | PostgreSQL | 5432 | Application database |
 
+### Dashboard
+![SupportAI Dashboard](Screenshots/Dashboard/dashboard.jpeg)
+
+### Ticket Management
+![SupportAI Tickets](Screenshots/Tickets/tickets.jpeg)git status --short
+
+### Knowledge Base
+![SupportAI Knowledge Base](Screenshots/Knowledge/knowledge.jpeg)
+
+
 ## Security
 
 Sensitive environment variables and local development files are excluded from version control.
@@ -278,15 +288,16 @@ The application has been tested for:
 
 Core development and functional testing are completed.
 
-Current focus:
+Current status:
 
-- Final frontend polish
-- Documentation
-- GitHub presentation
-- Deployment preparation
+- Core features implemented
+- Authentication and authorization tested
+- AI and RAG workflows tested
+- Frontend and backend integrated
+- GitHub documentation completed
 
 ## Author
 
-**Aathil Yaseen**
-Bsc(Hons) Electronics and Computer Science 
-University of Kelaniya 
+**Aathil Yaseen**  
+BSc (Hons) Electronics and Computer Science  
+University of Kelaniya
